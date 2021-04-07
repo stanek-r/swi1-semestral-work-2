@@ -9,4 +9,10 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+
+  @Get("/1")
+  logIdk(): void {
+    this.appService.logIdk();
+  }
+
 }
