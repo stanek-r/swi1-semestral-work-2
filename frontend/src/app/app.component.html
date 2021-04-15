@@ -1,1 +1,94 @@
-<button mat-button color="primary">Primary</button>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+
+<div class="main">
+  <form (ngSubmit)="sendForm()">
+    <div gdColumns.gt-sm="1fr 1fr"  gdGap.gt-sm="16px">
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>Jméno</mat-label>
+          <input matInput placeholder="Jméno" #name>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>Příjmení</mat-label>
+          <input matInput placeholder="Příjmení" #surname>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>Datum</mat-label>
+          <input matInput [matDatepicker]="picker" (dateChange)="loadTimes()" #date>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>Čas</mat-label>
+          <mat-select [(value)]="selectTime" [disabled]="disableTimes">
+            <mat-option *ngFor="let time of times; let i = index" [value]="times[i]">{{times[i]}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div gdColumn="span 2" style="margin:auto;">
+        <mat-radio-group aria-label="Vyberte">
+
+            <mat-radio-button (change)="updateText('Rodné číslo')" value="1" checked>Čech</mat-radio-button>
+            <mat-radio-button (change)="updateText('Identifikační číslo')" value="2">Cizinec</mat-radio-button>
+
+        </mat-radio-group>
+      </div>
+      <div gdColumn="span 2">
+        <mat-form-field appearance="outline">
+          <mat-label>{{text}}</mat-label>
+          <input matInput placeholder="{{text}}" #rc_ic>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>Telefonní číslo</mat-label>
+          <input matInput placeholder="Telefonní číslo" #phoneNumber>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="Email" #email>
+        </mat-form-field>
+      </div>
+      <div gdColumn="span 2">
+        <mat-form-field appearance="outline">
+          <mat-label>SPZ</mat-label>
+          <input matInput placeholder="SPZ" #spz>
+        </mat-form-field>
+      </div>
+      <div gdColumn="span 2" >
+        <mat-form-field appearance="outline">
+          <mat-label>Popis závady</mat-label>
+          <textarea matInput #description></textarea>
+        </mat-form-field>
+      </div>
+      <div style="justify-items: center">
+        <button mat-raised-button color="primary">Odeslat</button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="footer">
+
+</div>
+
+
+</body>
+</html>

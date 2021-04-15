@@ -1,4 +1,4 @@
-import {Injectable} from "@nestjs/common";
+import {HttpException, HttpStatus, Injectable} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Reservation} from "./reservation";
 import {Repository} from "typeorm";
@@ -16,7 +16,7 @@ export class ReservationService{
     }
 
     async getReservation(RC_IC: string): Promise<Reservation>{
-        return this.reservationRepository.findOne({where: {RC_IC: RC_IC}})
+        return this.reservationRepository.findOne({where: {RC_IC: RC_IC}});
     }
 
     async insertReservation(newReservation: Reservation): Promise<Reservation>{
@@ -26,7 +26,7 @@ export class ReservationService{
             if(errors.length > 0){
                 console.log('validation failed. errors: ', errors);
 
-                return null;
+                throw new HttpException('Wrong shit', HttpStatus.NOT_ACCEPTABLE);
             }else{
                 console.log('validation succeed');
 
@@ -45,5 +45,18 @@ export class ReservationService{
                 return await reservation.save();
             }
         });
+    }
+
+    async getTimes(date: string): Promise<string[]> {
+        let times = await this.reservationRepository.find({where: {date: date}});
+        let times2 = ["07:00:00", "08:00:00", "09:00:00","10:00:00","11:00:00","12:00:00","13:00:00","14:00:00","15:00:00","16:00:00"];
+
+        const tmp = times2.filter(function (objFromA) {
+            return !times.find(function(objFromB) {
+                return objFromA === objFromB.time;
+            })
+        });
+
+        return tmp;
     }
 }
