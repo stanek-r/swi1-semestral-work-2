@@ -15,21 +15,24 @@
       <div>
         <mat-form-field appearance="outline">
           <mat-label>Jméno</mat-label>
-          <input matInput placeholder="Jméno" #name>
+          <input matInput placeholder="Jméno" [formControl]="name2" #name required>
+          <mat-error *ngIf="name2.invalid">{{getErrorMessage()}}</mat-error>
         </mat-form-field>
       </div>
       <div>
         <mat-form-field appearance="outline">
           <mat-label>Příjmení</mat-label>
-          <input matInput placeholder="Příjmení" #surname>
+          <input matInput placeholder="Příjmení" [formControl]="surname2" #surname required>
+          <mat-error *ngIf="surname2.invalid">{{getErrorMessage()}}</mat-error>
         </mat-form-field>
       </div>
       <div>
         <mat-form-field appearance="outline">
           <mat-label>Datum</mat-label>
-          <input matInput [matDatepicker]="picker" (dateChange)="loadTimes()" #date>
+          <input matInput [matDatepicker]="picker" (dateChange)="loadTimes()" [formControl]="date2" #date required>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="date2.invalid">{{getErrorMessage()}}</mat-error>
         </mat-form-field>
       </div>
       <div>
@@ -51,32 +54,37 @@
       <div gdColumn="span 2">
         <mat-form-field appearance="outline">
           <mat-label>{{text}}</mat-label>
-          <input matInput placeholder="{{text}}" #rc_ic>
+          <input matInput placeholder="{{text}}" [formControl]="rc_ic2" #rc_ic required>
+          <mat-error *ngIf="rc_ic2.invalid">{{getErrorMessage()}}</mat-error>
         </mat-form-field>
       </div>
 
       <div>
         <mat-form-field appearance="outline">
           <mat-label>Telefonní číslo</mat-label>
-          <input matInput placeholder="Telefonní číslo" #phoneNumber>
+          <input matInput placeholder="Telefonní číslo" [formControl]="phoneNumber2" #phoneNumber required>
+          <mat-error *ngIf="phoneNumber2.invalid">{{getErrorMessage()}}</mat-error>
         </mat-form-field>
       </div>
       <div>
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
-          <input matInput placeholder="Email" #email>
+          <input matInput placeholder="Email" [formControl]="email2" #email required>
+          <mat-error *ngIf="email2.invalid">{{getErrorMessage()}}</mat-error>
         </mat-form-field>
       </div>
       <div gdColumn="span 2">
         <mat-form-field appearance="outline">
           <mat-label>SPZ</mat-label>
-          <input matInput placeholder="SPZ" #spz>
+          <input matInput placeholder="SPZ" [formControl]="spz2" #spz required>
+          <mat-error *ngIf="spz2.invalid">{{getErrorMessage()}}</mat-error>
         </mat-form-field>
       </div>
       <div gdColumn="span 2" >
         <mat-form-field appearance="outline">
           <mat-label>Popis závady</mat-label>
-          <textarea matInput #description></textarea>
+          <textarea matInput [formControl]="description2" #description required></textarea>
+          <mat-error *ngIf="description2.invalid">{{getErrorMessage()}}</mat-error>
         </mat-form-field>
       </div>
       <div style="justify-items: center">

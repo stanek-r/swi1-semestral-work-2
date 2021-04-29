@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import {AppComponent, DialogOverviewExampleDialog} from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {MatFormFieldModule} from "@angular/material/form-field";
@@ -15,7 +15,7 @@ import {MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule, MatOptionModule}
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatSelect, MatSelectModule} from "@angular/material/select";
 import {MatRadioModule} from "@angular/material/radio";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 
 
@@ -25,26 +25,27 @@ import {HttpClientModule} from "@angular/common/http";
   declarations: [
     AppComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    MatInputModule,
-    FlexLayoutModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatGridListModule,
-    MatOptionModule,
-    MatSelectModule,
-    MatRadioModule,
-    FormsModule,
-    HttpClientModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatFormFieldModule,
+        MatButtonModule,
+        MatInputModule,
+        FlexLayoutModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatGridListModule,
+        MatOptionModule,
+        MatSelectModule,
+        MatRadioModule,
+        FormsModule,
+        HttpClientModule,
+        ReactiveFormsModule
+    ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'en-CA'},
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent, DialogOverviewExampleDialog]
 })
 export class AppModule { }
