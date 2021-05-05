@@ -1,19 +1,34 @@
-import {IsAlpha, IsEmail, IsMobilePhone} from "class-validator";
+import { IsAlpha, IsEmail, IsMobilePhone, Length } from 'class-validator';
 
-export class TestReservation{
+export class TestReservation {
+  constructor(
+    name: string,
+    surname: string,
+    email: string,
+    phoneNumber: string,
+    SPZ: string,
+  ) {
+    this.name = name;
+    this.surname = surname;
+    this.email = email;
+    this.phoneNumber = phoneNumber;
+    this.SPZ = SPZ;
+  }
 
-    constructor(fullName: string, email: string, phoneNumber: string) {
-        this.fullName = fullName;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-    }
+  @Length(2, 256)
+  @IsAlpha()
+  name: string;
 
-    @IsAlpha()
-    fullName: string
+  @Length(2, 256)
+  @IsAlpha()
+  surname: string;
 
-    @IsEmail()
-    email: string;
+  @Length(2, 256)
+  SPZ: string;
 
-    @IsMobilePhone()
-    phoneNumber: string;
+  @IsEmail()
+  email: string;
+
+  @IsMobilePhone()
+  phoneNumber: string;
 }
