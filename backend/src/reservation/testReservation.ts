@@ -23,7 +23,7 @@ export class TestReservation {
   @IsAlpha()
   surname: string;
 
-  @Length(2, 256)
+  @Length(2, 10)
   SPZ: string;
 
   @IsEmail()

@@ -1,10 +1,10 @@
 import {Component, ElementRef, Inject, ViewChild} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Reservation} from "./reservation";
-import {validate} from "class-validator";
-import {TestReservation} from "./testReservation";
-import {FormControl, Validators} from "@angular/forms";
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {HttpClient} from '@angular/common/http';
+import {Reservation} from './reservation';
+import {validate} from 'class-validator';
+import {TestReservation} from './testReservation';
+import {FormControl, Validators} from '@angular/forms';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-root',
@@ -13,9 +13,9 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog
 })
 export class AppComponent {
   title = 'frontend';
-  text: string="Rodné číslo";
-  selectTime: string="";
-  times: string[]=[];
+  text = 'Rodné číslo';
+  selectTime = '';
+  times: string[] = [];
   disableTimes = true;
 
   @ViewChild('rc_ic') rc_ic!: ElementRef;
@@ -35,28 +35,35 @@ export class AppComponent {
   phoneNumber2 = new FormControl('', [Validators.required]);
   spz2 = new FormControl('', [Validators.required]);
   description2 = new FormControl('', [Validators.required]);
+  radioValue = true;
 
   constructor(private readonly httpClient: HttpClient, public dialog: MatDialog) {}
 
-  updateText(s: string){
+  updateText(s: string, value: boolean): void{
       this.text = s;
+      this.radioValue = value;
   }
 
-  getErrorMessage(){
-    return "Špatná hodnota";
+  getErrorMessage(): string{
+    return 'Špatná hodnota';
   }
 
-  sendForm(){
-    const testReservation = new TestReservation(this.name.nativeElement.value + this.surname.nativeElement.value,
+  sendForm(): void{
+    const testReservation = new TestReservation(
+      this.name.nativeElement.value,
+      this.surname.nativeElement.value,
       this.email.nativeElement.value,
-      this.phoneNumber.nativeElement.value);
+      this.phoneNumber.nativeElement.value,
+      this.spz.nativeElement.value,
+    );
 
     validate(testReservation).then(errors => {
       if (errors.length > 0) {
+        console.log('Validation failed: ' + errors);
         this.openDialog();
       } else {
-        const tmp : Reservation={
-          RC_IC: this.rc_ic.nativeElement.value,
+        const tmp: Reservation = {
+          RC_IC: ((this.radioValue) ? 'RC_' : 'IC_') + this.rc_ic.nativeElement.value,
           name: this.name.nativeElement.value,
           surname: this.surname.nativeElement.value,
           date: this.date.nativeElement.value,
@@ -65,8 +72,8 @@ export class AppComponent {
           phoneNumber: this.phoneNumber.nativeElement.value,
           SPZ: this.spz.nativeElement.value,
           description: this.description.nativeElement.value
-        }
-        this.httpClient.post<Reservation>("http://localhost:3000/reservations",tmp).subscribe(idk => {
+        };
+        this.httpClient.post<Reservation>('http://localhost:3000/reservations', tmp).subscribe(idk => {
           console.log('Nenastal error: ' + idk);
           window.location.reload();
         }, error => {
@@ -76,8 +83,8 @@ export class AppComponent {
     });
   }
 
-  loadTimes(){
-    this.httpClient.get<string[]>("http://localhost:3000/reservations/get-time/" + this.date.nativeElement.value).subscribe(idk => {
+  loadTimes(): void{
+    this.httpClient.get<string[]>('http://localhost:3000/reservations/get-time/' + this.date.nativeElement.value).subscribe(idk => {
       this.times = idk;
       this.disableTimes = false;
     }, error => {

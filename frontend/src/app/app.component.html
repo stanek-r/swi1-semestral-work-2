@@ -46,8 +46,8 @@
       <div gdColumn="span 2" style="margin:auto;">
         <mat-radio-group aria-label="Vyberte">
 
-            <mat-radio-button (change)="updateText('Rodné číslo')" value="1" checked>Čech</mat-radio-button>
-            <mat-radio-button (change)="updateText('Identifikační číslo')" value="2">Cizinec</mat-radio-button>
+            <mat-radio-button (change)="updateText('Rodné číslo', true)" value="1" checked>Čech</mat-radio-button>
+            <mat-radio-button (change)="updateText('Identifikační číslo', false)" value="2">Cizinec</mat-radio-button>
 
         </mat-radio-group>
       </div>
