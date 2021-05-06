@@ -63,7 +63,7 @@ export class ReservationService {
       } else {
         console.log('validation succeed');
 
-        const isFree = await this.reservationRepository.find({
+        const isFree = await this.reservationRepository.findOne({
           where: {
             date: newReservation.date,
             time: newReservation.time,
