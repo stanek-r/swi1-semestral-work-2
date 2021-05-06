@@ -78,6 +78,7 @@ export class AppComponent {
           window.location.reload();
         }, error => {
           console.log('Nastal error: ' + error);
+          this.openDialog();
         });
       }
     });
