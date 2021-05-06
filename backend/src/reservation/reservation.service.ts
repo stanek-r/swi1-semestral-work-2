@@ -63,19 +63,30 @@ export class ReservationService {
       } else {
         console.log('validation succeed');
 
-        const reservation = this.reservationRepository.create();
+        const isFree = await this.reservationRepository.find({
+          where: {
+            date: newReservation.date,
+            time: newReservation.time,
+          },
+        });
 
-        reservation.RC_IC = newReservation.RC_IC;
-        reservation.name = newReservation.name;
-        reservation.surname = newReservation.surname;
-        reservation.email = newReservation.email;
-        reservation.phoneNumber = newReservation.phoneNumber;
-        reservation.date = newReservation.date;
-        reservation.time = newReservation.time;
-        reservation.SPZ = newReservation.SPZ;
-        reservation.description = newReservation.description;
+        if (!isFree) {
+          const reservation = this.reservationRepository.create();
 
-        return await reservation.save();
+          reservation.RC_IC = newReservation.RC_IC;
+          reservation.name = newReservation.name;
+          reservation.surname = newReservation.surname;
+          reservation.email = newReservation.email;
+          reservation.phoneNumber = newReservation.phoneNumber;
+          reservation.date = newReservation.date;
+          reservation.time = newReservation.time;
+          reservation.SPZ = newReservation.SPZ;
+          reservation.description = newReservation.description;
+
+          return await reservation.save();
+        }else{
+          throw new HttpException('already exists', HttpStatus.NOT_ACCEPTABLE);
+        }
       }
     });
   }
