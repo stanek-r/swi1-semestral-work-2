@@ -84,7 +84,7 @@ export class ReservationService {
           reservation.description = newReservation.description;
 
           return await reservation.save();
-        }else{
+        } else {
           throw new HttpException('already exists', HttpStatus.NOT_ACCEPTABLE);
         }
       }
