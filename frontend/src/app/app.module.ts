@@ -17,6 +17,7 @@ import {MatSelect, MatSelectModule} from "@angular/material/select";
 import {MatRadioModule} from "@angular/material/radio";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
+import {DialogService} from "./dialog.service";
 
 
 
@@ -45,6 +46,7 @@ import {HttpClientModule} from "@angular/common/http";
     ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'en-CA'},
+    DialogService
   ],
   bootstrap: [AppComponent, DialogOverviewExampleDialog]
 })

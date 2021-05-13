@@ -5,6 +5,7 @@ import {validate} from 'class-validator';
 import {TestReservation} from './testReservation';
 import {FormControl, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {DialogService} from "./dialog.service";
 
 @Component({
   selector: 'app-root',
@@ -37,7 +38,11 @@ export class AppComponent {
   description2 = new FormControl('', [Validators.required]);
   radioValue = true;
 
-  constructor(private readonly httpClient: HttpClient, public dialog: MatDialog) {}
+  constructor(
+    private readonly httpClient: HttpClient,
+    public dialog: MatDialog,
+    private dialogService: DialogService,
+  ) {}
 
   updateText(s: string, value: boolean): void{
       this.text = s;
@@ -52,6 +57,7 @@ export class AppComponent {
     const testReservation = new TestReservation(
       this.name.nativeElement.value,
       this.surname.nativeElement.value,
+      this.rc_ic.nativeElement.value,
       this.email.nativeElement.value,
       this.phoneNumber.nativeElement.value,
       this.spz.nativeElement.value,
@@ -60,7 +66,14 @@ export class AppComponent {
     validate(testReservation).then(errors => {
       if (errors.length > 0) {
         console.log('Validation failed: ' + errors);
-        this.openDialog();
+
+        if(errors.toString().includes('rc_ic')) {
+          this.openDialog('Zadali jste neplatné rodné číslo');
+        } else if(errors.toString().includes('phoneNumber')) {
+          this.openDialog('Zadali jste neplatné telefonní číslo');
+        } else {
+          this.openDialog('Ve formuláři jste zadali neplatné informace');
+        }
       } else {
         const tmp: Reservation = {
           RC_IC: ((this.radioValue) ? 'RC_' : 'IC_') + this.rc_ic.nativeElement.value,
@@ -78,7 +91,7 @@ export class AppComponent {
           window.location.reload();
         }, error => {
           console.log('Nastal error: ' + error);
-          this.openDialog();
+          this.openDialog('Čas který jste zadali je již obsazený');
         });
       }
     });
@@ -93,7 +106,9 @@ export class AppComponent {
     });
   }
 
-  openDialog(): void {
+  openDialog(msg: string): void {
+    this.dialogService.message = msg;
+
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
       width: '250px'
     });
@@ -112,7 +127,9 @@ export class AppComponent {
 export class DialogOverviewExampleDialog {
 
   constructor(
-    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>) {}
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
+    public dialogService: DialogService,
+  ) {}
 
   onNoClick(): void {
     this.dialogRef.close();

@@ -28,6 +28,7 @@ export class ReservationService {
     const testReservation = new TestReservation(
       newReservation.name,
       newReservation.surname,
+      newReservation.RC_IC,
       newReservation.email,
       newReservation.phoneNumber,
       newReservation.SPZ,
@@ -50,6 +51,7 @@ export class ReservationService {
     const testReservation = new TestReservation(
       newReservation.name,
       newReservation.surname,
+      newReservation.RC_IC,
       newReservation.email,
       newReservation.phoneNumber,
       newReservation.SPZ,
